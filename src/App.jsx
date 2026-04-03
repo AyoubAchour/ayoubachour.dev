@@ -22,7 +22,15 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const [hoveredFileIndex, setHoveredFileIndex] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 639px)').matches)
   const shouldReduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 639px)')
+    const handler = (e) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
   const walletState = isOpen ? 'open' : 'closed'
   const sharedEase = [0.22, 1, 0.36, 1]
   // Tab dimensions
@@ -116,7 +124,9 @@ function App() {
 
   // Wallet slides to lower-left + shrinks when a file is pulled out
   const walletPullAnimate = isFileSelected && !shouldReduceMotion
-    ? { x: '-22vw', y: '10vh', scale: 0.82 }
+    ? isMobile
+      ? { x: 0, y: '5vh', scale: 0.78 }
+      : { x: '-22vw', y: '10vh', scale: 0.82 }
     : { x: 0, y: 0, scale: 1 }
 
   // ─── Render ────────────────────────────────────────────────────────────────
@@ -395,7 +405,7 @@ function App() {
             exit={{ x: '108%', opacity: 0 }}
             transition={{ duration: 0.56, ease: sharedEase, delay: 0.05 }}
             className="fixed bottom-0 right-0 top-0 flex items-center p-6 md:p-10"
-            style={{ width: 'clamp(320px, 60vw, 880px)', zIndex: 100 }}
+            style={{ width: isMobile ? '96vw' : 'clamp(360px, 60vw, 880px)', zIndex: 100 }}
           >
             {/* Paper sheet */}
             <div
