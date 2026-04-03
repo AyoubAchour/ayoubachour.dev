@@ -69,7 +69,7 @@ function MaxwellModel({ onHover, onUnhover }) {
     <primitive
       object={scene}
       scale={5.0}
-      position={[0, -1.8, -1.0]}
+      position={[0, -1.2, -1.0]}
       rotation={[0, (60 * Math.PI) / 180, 0]}
       onPointerOver={(e) => { e.stopPropagation(); onHover() }}
       onPointerOut={(e)  => { e.stopPropagation(); onUnhover() }}

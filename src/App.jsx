@@ -34,9 +34,9 @@ function App() {
   const walletState = isOpen ? 'open' : 'closed'
   const sharedEase = [0.22, 1, 0.36, 1]
   // Tab dimensions
-  const tabHeightPx = 30
-  const tabWidthPct = isMobile ? 16 : 14    // % of card width
-  const tabSpacingPct = isMobile ? 18 : 16  // % gap between tab starts
+  const tabHeightPx = isMobile ? 36 : 30
+  const tabWidthPct = isMobile ? 18 : 14    // % of card width
+  const tabSpacingPct = isMobile ? 20 : 16  // % gap between tab starts
   const tabBaseRightPct = 2                  // % from right edge for tab 1 (index 0 = About)
 
   const isFileSelected = selectedFile !== null
@@ -268,6 +268,7 @@ function App() {
                 const tabRight = `${tabBaseRightPct + index * tabSpacingPct}%`
                 const isHovered = hoveredFileIndex === index
                 const isThisSelected = isFileSelected && selectedFile === index
+                const tabClickable = isOpen && !isThisSelected
 
                 return (
                   <motion.div
@@ -285,6 +286,9 @@ function App() {
                       className="relative h-full"
                     >
                       <div
+                        onClick={tabClickable ? () => handleFileClick(index) : undefined}
+                        onMouseEnter={tabClickable ? () => setHoveredFileIndex(index) : undefined}
+                        onMouseLeave={tabClickable ? () => setHoveredFileIndex(null) : undefined}
                         className="absolute flex items-center justify-center rounded-t-[3px] border-t border-x border-stone-900/8"
                         style={{
                           right: tabRight,
@@ -300,6 +304,8 @@ function App() {
                           textTransform: 'uppercase',
                           letterSpacing: isMobile ? '0.07em' : '0.12em',
                           overflow: 'hidden',
+                          pointerEvents: tabClickable ? 'auto' : 'none',
+                          cursor: tabClickable ? 'pointer' : 'default',
                         }}
                       >
                         {sheet.label}
