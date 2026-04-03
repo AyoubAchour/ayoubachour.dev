@@ -138,7 +138,7 @@ function App() {
       <motion.section
         animate={walletPullAnimate}
         transition={{ duration: 0.62, ease: sharedEase }}
-        className="flex min-h-screen w-full flex-col items-center justify-center px-2 py-10 sm:px-6 md:px-10"
+        className="flex min-h-screen w-full flex-col items-center justify-center px-0 py-10 sm:px-6 md:px-10"
         style={{ paddingTop: isMobile ? '6vh' : '28vh' }}
       >
         <div className="w-full max-w-5xl perspective-(--perspective-folder)">
@@ -283,19 +283,22 @@ function App() {
               }}
               className="absolute inset-x-[7.5%] top-[21.5%] z-40 h-[60%] cursor-pointer rounded-[4px] border border-amber-950/14 bg-[#e2b463] p-0 text-inherit backface-hidden shadow-[0_14px_26px_rgba(92,63,11,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-950/25 focus-visible:ring-offset-4"
             >
-              {/* Top-left: role + name */}
-              <div className="absolute left-[8%] top-[11%] flex flex-col gap-[0.55em]">
-                <p className="text-[clamp(0.54rem,0.88vw,0.68rem)] font-semibold uppercase tracking-[0.32em] text-amber-950/55">
-                  Software Engineer
-                </p>
-                <h2 className="[font-size:clamp(0.62rem,2.5vw,1.32rem)] font-semibold uppercase tracking-[0.14em] leading-tight text-amber-950/82">
-                  Mohamed Ayoub Achour
-                </h2>
-              </div>
+              {/* Front panel content: name top, contacts bottom — justify-between prevents overlap at any panel height */}
+              <div className="absolute inset-[8%] flex flex-col justify-between overflow-hidden">
 
-              {/* Bottom-left: contact details with icons */}
-              <div className="absolute bottom-[10%] left-[8%] right-[8%] flex flex-col gap-[0.65em] overflow-hidden">
-                <div className="mb-[0.4em] h-px w-10 bg-amber-950/22" />
+                {/* Top: role + name */}
+                <div className="flex flex-col gap-[0.55em]">
+                  <p className="text-[clamp(0.54rem,0.88vw,0.68rem)] font-semibold uppercase tracking-[0.32em] text-amber-950/55">
+                    Software Engineer
+                  </p>
+                  <h2 className="[font-size:clamp(0.62rem,2.5vw,1.32rem)] font-semibold uppercase tracking-[0.14em] leading-tight text-amber-950/82">
+                    Mohamed Ayoub Achour
+                  </h2>
+                </div>
+
+                {/* Bottom: divider + contact details */}
+                <div className="flex flex-col gap-[0.45em] overflow-hidden">
+                  <div className="mb-[0.25em] h-px w-10 bg-amber-950/22" />
 
                 {/* Email */}
                 <a
@@ -368,6 +371,7 @@ function App() {
                   </span>
                 </div>
               </div>
+            </div>
             </motion.div>
 
           </div>
