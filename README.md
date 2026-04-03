@@ -4,7 +4,7 @@ Personal portfolio — built around a document wallet UI sitting on a wooden des
 
 The folder opens to reveal file cards (About, Projects, Experience, Skills). Pulling a card out slides in a full panel. The desk has two interactive 3D objects: a coffee cup that shakes on click, and Maxwell the cat that plays its animation on click.
 
-**Live:** https://ayoubachour.vercel.app
+**Live:** https://ayoubachour-dev.vercel.app
 
 ## Stack
 
