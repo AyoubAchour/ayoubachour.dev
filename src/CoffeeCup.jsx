@@ -79,12 +79,12 @@ export default function CoffeeCup() {
       aria-hidden="true"
       style={{
         position: 'fixed',
-        top: '3vh',
-        left: '3vw',
-        width: 'clamp(140px, 12vw, 190px)',
-        height: 'clamp(170px, 15vw, 230px)',
+        bottom: '2vh',
+        right: '8vw',
+        width: 'clamp(160px, 14vw, 215px)',
+        height: 'clamp(195px, 17vw, 265px)',
         pointerEvents: 'auto',
-        zIndex: 12,
+        zIndex: 110,
         filter: 'drop-shadow(4px 10px 14px rgba(60,30,5,0.55))',
       }}
     >
