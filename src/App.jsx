@@ -35,8 +35,8 @@ function App() {
   const sharedEase = [0.22, 1, 0.36, 1]
   // Tab dimensions
   const tabHeightPx = 30
-  const tabWidthPct = isMobile ? 24 : 14    // % of card width
-  const tabSpacingPct = isMobile ? 22 : 16  // % gap between tab starts
+  const tabWidthPct = isMobile ? 16 : 14    // % of card width
+  const tabSpacingPct = isMobile ? 18 : 16  // % gap between tab starts
   const tabBaseRightPct = 2                  // % from right edge for tab 1 (index 0 = About)
 
   const isFileSelected = selectedFile !== null
@@ -138,7 +138,7 @@ function App() {
       <motion.section
         animate={walletPullAnimate}
         transition={{ duration: 0.62, ease: sharedEase }}
-        className="flex min-h-screen w-full flex-col items-center justify-center px-6 py-10 md:px-10"
+        className="flex min-h-screen w-full flex-col items-center justify-center px-2 py-10 sm:px-6 md:px-10"
         style={{ paddingTop: isMobile ? '6vh' : '28vh' }}
       >
         <div className="w-full max-w-5xl perspective-(--perspective-folder)">
@@ -247,10 +247,10 @@ function App() {
                           color: 'rgba(28,25,23,0.65)',
                           opacity: isThisSelected ? 0.12 : 1,
                           transition: 'opacity 0.35s ease',
-                          fontSize: isMobile ? '0.5rem' : '0.6rem',
+                          fontSize: isMobile ? '0.43rem' : '0.6rem',
                           fontWeight: 700,
                           textTransform: 'uppercase',
-                          letterSpacing: '0.12em',
+                          letterSpacing: isMobile ? '0.07em' : '0.12em',
                           overflow: 'hidden',
                         }}
                       >
@@ -288,7 +288,7 @@ function App() {
                 <p className="text-[clamp(0.54rem,0.88vw,0.68rem)] font-semibold uppercase tracking-[0.32em] text-amber-950/55">
                   Software Engineer
                 </p>
-                <h2 className="[font-size:clamp(0.7rem,3.2vw,1.32rem)] font-semibold uppercase tracking-[0.14em] leading-tight text-amber-950/82">
+                <h2 className="[font-size:clamp(0.62rem,2.5vw,1.32rem)] font-semibold uppercase tracking-[0.14em] leading-tight text-amber-950/82">
                   Mohamed Ayoub Achour
                 </h2>
               </div>
