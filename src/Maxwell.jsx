@@ -68,8 +68,8 @@ function MaxwellModel({ onHover, onUnhover }) {
   return (
     <primitive
       object={scene}
-      scale={5.0}
-      position={[0, -1.2, -1.0]}
+      scale={4.2}
+      position={[-0.8, -0.5, -1.0]}
       rotation={[0, (60 * Math.PI) / 180, 0]}
       onPointerOver={(e) => { e.stopPropagation(); onHover() }}
       onPointerOut={(e)  => { e.stopPropagation(); onUnhover() }}
@@ -92,8 +92,8 @@ export default function Maxwell() {
         position: 'fixed',
         top: 0,
         left: 0,
-        width: 'clamp(150px, 38vw, 480px)',
-        height: 'clamp(165px, 40vw, 520px)',
+        width: 'clamp(110px, 28vw, 360px)',
+        height: 'clamp(120px, 30vw, 400px)',
         pointerEvents: 'auto',
         zIndex: 110,
         filter: 'drop-shadow(4px 10px 14px rgba(60,30,5,0.55))',

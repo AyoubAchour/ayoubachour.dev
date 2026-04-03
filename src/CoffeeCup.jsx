@@ -84,7 +84,7 @@ export default function CoffeeCup() {
       style={{
         position: 'fixed',
         bottom: '2vh',
-        right: '14vw',
+        right: '3vw',
         width: 'clamp(85px, 19vw, 195px)',
         height: 'clamp(100px, 23vw, 240px)',
         pointerEvents: 'auto',
