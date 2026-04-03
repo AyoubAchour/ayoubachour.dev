@@ -3,6 +3,9 @@ import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 
+// Point useGLTF's DRACOLoader at our local decoder files
+useGLTF.setDecoderPath('/draco/')
+
 function MaxwellModel({ onHover, onUnhover }) {
   const { scene, animations } = useGLTF('/maxwell/scene.gltf')
   const mixerRef = useRef(null)
@@ -80,6 +83,7 @@ useGLTF.preload('/maxwell/scene.gltf')
 export default function Maxwell() {
   const handleHover   = useCallback(() => { document.body.style.cursor = 'pointer' }, [])
   const handleUnhover = useCallback(() => { document.body.style.cursor = '' }, [])
+  const isMobile = window.matchMedia('(max-width: 639px)').matches
 
   return (
     <div
@@ -97,9 +101,10 @@ export default function Maxwell() {
     >
       <Canvas
         camera={{ position: [0, 5, 4], fov: 50 }}
-        gl={{ alpha: true, antialias: true }}
+        gl={{ alpha: true, antialias: !isMobile }}
         style={{ background: 'transparent' }}
         frameloop="demand"
+        dpr={[1, 1.5]}
         shadows={false}
       >
         <ambientLight intensity={2.0} color="#fde8b0" />

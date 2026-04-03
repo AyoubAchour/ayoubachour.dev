@@ -164,8 +164,56 @@ function App() {
               style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
               className="absolute inset-x-[8.5%] top-[20.5%] h-[60%]"
             >
-              <div className="absolute right-[1.1%] top-[-8%] h-[10.5%] w-[15.5%] rounded-t-[3px] border-x border-t border-amber-950/12 bg-[#d6a24b] sm:w-[12.75%]" />
               <div className="absolute inset-0 rounded-[4px] border border-amber-950/12 bg-[#d6a24b] shadow-[0_16px_28px_rgba(100,71,18,0.1)]" />
+            </motion.div>
+
+            {/*
+              Open/close tab — lives OUTSIDE the shell so its z-index (45) competes
+              directly with the front panel (z-40) in the same stacking context.
+              A wrapper div carries the shell's y-lift; the button itself has no
+              y in its own animate, so whileHover { y: -2 } never conflicts.
+            */}
+            <motion.div
+              aria-hidden="true"
+              initial={false}
+              animate={walletState}
+              variants={shouldReduceMotion
+                ? { closed: { y: 0 }, open: { y: -24 } }
+                : { closed: { y: 0 }, open: { y: -26 } }
+              }
+              transition={shellTransition}
+              style={{
+                position: 'absolute',
+                right: '9.41%',
+                top: '15.7%',
+                height: '5.5%',
+                width: isMobile ? '13%' : '11%',
+                zIndex: 45,
+                pointerEvents: 'none',
+              }}
+            >
+              <motion.button
+                onClick={() => setIsOpen(o => !o)}
+                aria-label={isOpen ? 'Close wallet' : 'Open wallet'}
+                aria-controls="wallet-files"
+                aria-expanded={isOpen}
+                whileHover={shouldReduceMotion ? {} : { y: -2, backgroundColor: '#ddb55a' }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.97 }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
+                className="flex h-full w-full cursor-pointer items-center justify-center rounded-t-[3px] border-x border-t border-amber-950/18 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-950/25"
+                style={{
+                  pointerEvents: 'auto',
+                  backgroundColor: '#d6a24b',
+                  color: 'rgba(92,63,22,0.72)',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  fontSize: isMobile ? '0.43rem' : '0.6rem',
+                  letterSpacing: isMobile ? '0.07em' : '0.12em',
+                  overflow: 'hidden',
+                }}
+              >
+                {isOpen ? 'Close' : 'Open'}
+              </motion.button>
             </motion.div>
 
             {/* ── File cards + tabs ── */}
@@ -188,7 +236,7 @@ function App() {
                     initial={false}
                     animate={walletState}
                     variants={fileVariants}
-                    style={{ zIndex: fileZIndex, willChange: 'transform, opacity' }}
+                    style={{ zIndex: fileZIndex }}
                     className="absolute inset-x-0 bottom-0 h-[80%]"
                   >
                     <motion.div
@@ -228,7 +276,7 @@ function App() {
                     initial={false}
                     animate={walletState}
                     variants={fileVariants}
-                    style={{ zIndex: 50, willChange: 'transform, opacity', pointerEvents: 'none' }}
+                    style={{ zIndex: 50, pointerEvents: 'none' }}
                     className="absolute inset-x-0 bottom-0 h-[80%]"
                   >
                     <motion.div
@@ -264,24 +312,16 @@ function App() {
 
             {/* Front panel / wallet cover */}
             <motion.div
-              role="button"
-              tabIndex={0}
               initial={false}
               animate={walletState}
               variants={frontPanelVariants}
               transition={frontPanelTransition}
-              whileTap={shouldReduceMotion ? { opacity: 0.92 } : { scale: 0.995 }}
-              onClick={() => setIsOpen(open => !open)}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setIsOpen(open => !open) } }}
-              aria-controls="wallet-files"
-              aria-expanded={isOpen}
-              aria-label={isOpen ? 'Close document wallet' : 'Open document wallet'}
               style={{
                 transformOrigin: 'center top',
                 transformStyle: 'preserve-3d',
                 willChange: 'transform',
               }}
-              className="absolute inset-x-[7.5%] top-[21.5%] z-40 h-[60%] cursor-pointer rounded-[4px] border border-amber-950/14 bg-[#e2b463] p-0 text-inherit backface-hidden shadow-[0_14px_26px_rgba(92,63,11,0.14)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-950/25 focus-visible:ring-offset-4"
+              className="absolute inset-x-[7.5%] top-[21.5%] z-40 h-[60%] rounded-[4px] border border-amber-950/14 bg-[#e2b463] backface-hidden shadow-[0_14px_26px_rgba(92,63,11,0.14)]"
             >
               {/* Front panel content: name top, contacts bottom — justify-between prevents overlap at any panel height */}
               <div className="absolute inset-[8%] flex flex-col justify-between overflow-hidden">
@@ -303,7 +343,6 @@ function App() {
                 {/* Email */}
                 <a
                   href="mailto:medayoubachour69@gmail.com"
-                  onClick={(e) => e.stopPropagation()}
                   className="flex min-w-0 items-center gap-[0.7em] text-amber-950/68 transition-colors hover:text-amber-950/90"
                 >
                   <svg className="h-[clamp(10px,1.05vw,13px)] w-[clamp(10px,1.05vw,13px)] flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
@@ -318,7 +357,6 @@ function App() {
                 {/* Phone */}
                 <a
                   href="tel:+21695523730"
-                  onClick={(e) => e.stopPropagation()}
                   className="flex min-w-0 items-center gap-[0.7em] text-amber-950/68 transition-colors hover:text-amber-950/90"
                 >
                   <svg className="h-[clamp(10px,1.05vw,13px)] w-[clamp(10px,1.05vw,13px)] flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
@@ -334,7 +372,6 @@ function App() {
                   href="https://www.linkedin.com/in/medayoubachour/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
                   className="flex min-w-0 items-center gap-[0.7em] text-amber-950/62 transition-colors hover:text-amber-950/88"
                 >
                   <svg className="h-[clamp(10px,1.05vw,13px)] w-[clamp(10px,1.05vw,13px)] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
@@ -350,7 +387,6 @@ function App() {
                   href="https://github.com/AyoubAchour"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
                   className="flex min-w-0 items-center gap-[0.7em] text-amber-950/62 transition-colors hover:text-amber-950/88"
                 >
                   <svg className="h-[clamp(10px,1.05vw,13px)] w-[clamp(10px,1.05vw,13px)] flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">

@@ -2,6 +2,9 @@ import { Suspense, useRef, useCallback } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { useGLTF, Center } from '@react-three/drei'
 
+// Point useGLTF's DRACOLoader at our local decoder files
+useGLTF.setDecoderPath('/draco/')
+
 // Model bounding box (world space, after root node's Y-up conversion):
 //   X/Z width : ±1.29  (~2.57 units wide)
 //   Y height  : 0 → 3.39  (base near Y=0, coffee surface at Y≈3.4)
@@ -73,6 +76,7 @@ useGLTF.preload('/scene.gltf')
 export default function CoffeeCup() {
   const handleHover   = useCallback(() => { document.body.style.cursor = 'pointer' }, [])
   const handleUnhover = useCallback(() => { document.body.style.cursor = '' }, [])
+  const isMobile = window.matchMedia('(max-width: 639px)').matches
 
   return (
     <div
@@ -90,9 +94,10 @@ export default function CoffeeCup() {
     >
       <Canvas
         camera={{ position: [0, 5, 4], fov: 50 }}
-        gl={{ alpha: true, antialias: true }}
+        gl={{ alpha: true, antialias: !isMobile }}
         style={{ background: 'transparent' }}
         frameloop="demand"
+        dpr={[1, 1.5]}
         shadows={false}
       >
         <ambientLight intensity={1.5} color="#fde8b0" />
