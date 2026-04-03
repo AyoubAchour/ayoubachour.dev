@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: Inter, "Segoe UI", Roboto, sans-serif;
+  --perspective-folder: 950px;
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+@layer base {
+  body {
+    @apply font-sans;
+  }
+}
+
+/* ─── Wood table surface ─────────────────────────────────────────────────── */
+/*
+  Layer 1 (top): vignette gradient — composites normally over everything.
+  Layer 2:       SVG grain — gradient-map approach:
+                   1. fractalNoise → desaturate (R=G=B=L, no color artifacts)
+                   2. feComponentTransfer with DIFFERENT slopes per channel
+                      → maps grayscale [0,1] to two chêne oak colors:
+                        low  (grain rings) → #B87E38  (medium amber-brown)
+                        high (field)       → #E0BE7A  (pale warm tan)
+                   Safe because R=G=B after desaturation — different per-channel
+                   slopes are a gradient map, not per-channel noise coloring.
+  background-color: #d4b078 light oak fallback (SVG is fully opaque so only
+                    shows on load failure or very old browsers).
+  No multiply blend needed — SVG carries the correct oak colors directly.
+*/
+.wood-surface {
+  background-color: #d4b078;
+  background-image:
+    linear-gradient(rgba(0,0,0,0.13), rgba(0,0,0,0.13)),
+    radial-gradient(ellipse at 50% 35%, transparent 28%, rgba(0, 0, 0, 0.18) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1600' height='1000'%3E%3Cfilter id='g' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.03 0.004' numOctaves='4' seed='17'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.156' intercept='0.722'/%3E%3CfeFuncG type='linear' slope='0.251' intercept='0.494'/%3E%3CfeFuncB type='linear' slope='0.258' intercept='0.220'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+}
