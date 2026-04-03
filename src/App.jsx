@@ -35,9 +35,9 @@ function App() {
   const sharedEase = [0.22, 1, 0.36, 1]
   // Tab dimensions
   const tabHeightPx = 30
-  const tabWidthPct = 14    // % of card width
-  const tabSpacingPct = 16  // % gap between tab starts
-  const tabBaseRightPct = 2 // % from right edge for tab 1 (index 0 = About)
+  const tabWidthPct = isMobile ? 24 : 14    // % of card width
+  const tabSpacingPct = isMobile ? 22 : 16  // % gap between tab starts
+  const tabBaseRightPct = 2                  // % from right edge for tab 1 (index 0 = About)
 
   const isFileSelected = selectedFile !== null
 
@@ -237,7 +237,7 @@ function App() {
                       className="relative h-full"
                     >
                       <div
-                        className="absolute flex items-center justify-center rounded-t-[3px] border-t border-x border-stone-900/8 text-[0.6rem] font-bold uppercase tracking-[0.12em]"
+                        className="absolute flex items-center justify-center rounded-t-[3px] border-t border-x border-stone-900/8"
                         style={{
                           right: tabRight,
                           width: `${tabWidthPct}%`,
@@ -247,6 +247,11 @@ function App() {
                           color: 'rgba(28,25,23,0.65)',
                           opacity: isThisSelected ? 0.12 : 1,
                           transition: 'opacity 0.35s ease',
+                          fontSize: isMobile ? '0.5rem' : '0.6rem',
+                          fontWeight: 700,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.12em',
+                          overflow: 'hidden',
                         }}
                       >
                         {sheet.label}
@@ -283,7 +288,7 @@ function App() {
                 <p className="text-[clamp(0.54rem,0.88vw,0.68rem)] font-semibold uppercase tracking-[0.32em] text-amber-950/55">
                   Software Engineer
                 </p>
-                <h2 className="[font-size:clamp(0.75rem,4.2vw,1.32rem)] font-semibold uppercase tracking-[0.14em] leading-tight text-amber-950/82">
+                <h2 className="[font-size:clamp(0.7rem,3.2vw,1.32rem)] font-semibold uppercase tracking-[0.14em] leading-tight text-amber-950/82">
                   Mohamed Ayoub Achour
                 </h2>
               </div>
