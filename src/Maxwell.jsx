@@ -91,7 +91,7 @@ export default function Maxwell() {
         width: 'clamp(150px, 38vw, 480px)',
         height: 'clamp(165px, 40vw, 520px)',
         pointerEvents: 'auto',
-        zIndex: 12,
+        zIndex: 110,
         filter: 'drop-shadow(4px 10px 14px rgba(60,30,5,0.55))',
       }}
     >
